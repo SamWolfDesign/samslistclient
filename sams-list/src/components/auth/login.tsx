@@ -1,12 +1,14 @@
+// import classes from '*.module.css';
 import React, {useState, Component} from 'react';
 
 interface AuthState{
-    email: String,
-    password: String
+    email: string,
+    password: string
 }
 
 interface AuthProps{
-    onClickHandler: any
+    // onClickHandler: any
+    setToken: (newToken: string) => void;
 }
 
 class Login extends React.Component<AuthProps, AuthState> {
@@ -18,9 +20,9 @@ class Login extends React.Component<AuthProps, AuthState> {
             password: ''
         }
 
-        this.onClickHandler = this.onClickHandler.bind(this);
+        this.submitHandler = this.submitHandler.bind(this);
     }
-    onClickHandler(e: any) {
+    submitHandler(e: any) {
         e.preventDefault();
         fetch("http://localhost:3000/user/login", {
             method: 'POST',
@@ -39,9 +41,24 @@ class Login extends React.Component<AuthProps, AuthState> {
 
     render() {
         return(
-            <Form>
+            <form>
                 <h1>Login here!</h1>
-            </Form>
+                <form onSubmit={this.submitHandler}>
+                    <input placeholder="Email"
+                    value={this.state.email}
+                    onChange={e => this.setState({email: e.target.value})}
+                    required/>
+
+                    <input placeholder="Password"
+                    value={this.state.password}
+                    type="password"
+                    onChange={e => this.setState({password: e.target.value})}
+                    required/>
+                </form>
+                <button>Click me to sign in!</button>
+            </form>
         )
     }
 }
+
+export default Login
