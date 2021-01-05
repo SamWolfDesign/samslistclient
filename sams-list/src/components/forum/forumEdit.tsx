@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 interface AuthState{
     title: String,
     main: String,
-    user: String,
-    date: String
+    
 }
 
 interface AuthProps{
@@ -17,8 +16,7 @@ class ForumEdit extends React.Component<AuthProps, AuthState>{
         this.state = {
             title: '',
             main: '',
-            user: '',
-            date: ''
+            
         };
 
         this.handleFormEdit = this.handleFormEdit.bind(this)
@@ -36,6 +34,18 @@ class ForumEdit extends React.Component<AuthProps, AuthState>{
                 console.log(data)
             }) .catch ((error ) => 
                 console.log(error)
+            )
+        }
+        handleTitleEdit = (e: any) => {
+            this.setState({ title: e.target.value});
+        }
+        handleMainInput = (e: any) => {
+            this.setState({ main: e.target.value })
+        }
+
+        render() {
+            return(
+                
             )
         }
 }
