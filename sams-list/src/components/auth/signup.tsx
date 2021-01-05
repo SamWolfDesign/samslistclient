@@ -1,4 +1,4 @@
-import React, {useState, Component} from 'react';
+import React, {useState, Component, FormEvent} from 'react';
 // import { isConstructorDeclaration } from 'typescript';
 import {TextField} from '@material-ui/core'
 
@@ -11,14 +11,14 @@ interface AuthState{
     role: string
 }
 
-// interface AuthProps{
-//     // onClickHandler: any
-//     // classes: any,
-//     setToken : any
-// }
+interface Props{
+    // onClickHandler: any
+    // classes: any,
+    // setToken : any
+}
 class Signup extends React.Component<{}, AuthState> {
 
-    constructor(props: any) {
+    constructor(props: Props) {
         super(props);
         this.state = {
             firstName: '',
@@ -30,7 +30,7 @@ class Signup extends React.Component<{}, AuthState> {
 
         this.submitHandler = this.submitHandler.bind(this);
     }
-        submitHandler(e: any) {
+        submitHandler(e: FormEvent) {
             e.preventDefault();
             fetch("http://localhost:3000/user/create", {
                 method: 'POST',

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, FormEvent, SyntheticEvent } from "react";
 
 interface AuthState{
     title: String,
@@ -24,7 +24,7 @@ class Forum extends React.Component<AuthProps, AuthState> {
 
         this.handleFormInput = this.handleFormInput.bind(this);
     }
-        handleFormInput(e: any) {
+        handleFormInput(e: FormEvent) {
             e.preventDefault();
             fetch("http://localhost:3000/forum/create", {
                 method: 'POST',
@@ -46,10 +46,10 @@ class Forum extends React.Component<AuthProps, AuthState> {
     //     console.log(this.state.date);
     // };
 
-    handleTitleInput = (e: any) => {
+    handleTitleInput = (e: SyntheticEvent) => {
         this.setState({ title: e.target.value });
     };
-    handleMainInput = (e: any) => {
+    handleMainInput = (e: FormEvent) => {
         this.setState({ main: e.target.value});
     };
     handleUserInput = (e: any) => {

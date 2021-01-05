@@ -1,5 +1,5 @@
 // import classes from '*.module.css';
-import React, {useState, Component} from 'react';
+import React, {useState, Component, FormEvent} from 'react';
 
 interface AuthState{
     email: string,
@@ -22,7 +22,7 @@ class Login extends React.Component<AuthProps, AuthState> {
 
         this.submitHandler = this.submitHandler.bind(this);
     }
-    submitHandler(e: any) {
+    submitHandler(e: FormEvent) {
         e.preventDefault();
         fetch("http://localhost:3000/user/login", {
             method: 'POST',

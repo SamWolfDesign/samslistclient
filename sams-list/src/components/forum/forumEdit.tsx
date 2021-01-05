@@ -45,7 +45,9 @@ class ForumEdit extends React.Component<AuthProps, AuthState>{
 
         render() {
             return(
-                
+                <div>
+                    <h3>Edit your post here!</h3>
+                </div>
             )
         }
 }
