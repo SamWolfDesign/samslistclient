@@ -1,25 +1,30 @@
+
+
 import React, { Component, FormEvent, SyntheticEvent } from "react";
 
-interface AuthState{
-    title: String,
-    main: String,
-    user: String,
-    date: String
+interface ForumCreateState{
+    title: string,
+    main: string,
+    user: string,
+    date: string
 }
 
-interface AuthProps{
-    handleFormInput: any
-    value: any
+interface ForumCreateProps{
+    // handleFormInput: ForumCreateProps
+    // value: ForumCreateProps
+    token: string 
+    fetchForum: () => void
 }
 
-class Forum extends React.Component<AuthProps, AuthState> {
-    constructor(props: any) {
+class ForumCreate extends React.Component<ForumCreateProps, ForumCreateState> {
+    constructor(props: ForumCreateProps) {
         super(props);
         this.state = {
             title: '',
             main: '',
             user: '',
             date: '',
+            // token: this.props.token,
         };
 
         this.handleFormInput = this.handleFormInput.bind(this);
@@ -30,11 +35,14 @@ class Forum extends React.Component<AuthProps, AuthState> {
                 method: 'POST',
                 body: JSON.stringify({forum: {title: this.state.title, main: this.state.main, user: this.state.user, date: this.state.date}}),
                 headers: new Headers({
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': this.props.token,
                 })
             }) .then((response) => response.json()
             ) .then ((data) => {
                 console.log(data)
+                // ********** call fetchForum() as props  to call it so once user creates something it displays.
+                this.props.fetchForum()
             }) .catch (( error ) =>
                 console.log(error)
             ) 
@@ -46,17 +54,17 @@ class Forum extends React.Component<AuthProps, AuthState> {
     //     console.log(this.state.date);
     // };
 
-    handleTitleInput = (e: SyntheticEvent) => {
-        this.setState({ title: e.target.value });
+    handleTitleInput = (e: React.FormEvent<HTMLInputElement>): void => {
+        this.setState({ title: e.currentTarget.value });
     };
-    handleMainInput = (e: FormEvent) => {
-        this.setState({ main: e.target.value});
+    handleMainInput = (e: React.FormEvent<HTMLInputElement>): void => {
+        this.setState({ main: e.currentTarget.value});
     };
-    handleUserInput = (e: any) => {
-        this.setState({ user: e.target.value });
+    handleUserInput = (e: React.FormEvent<HTMLInputElement>): void => {
+        this.setState({ user: e.currentTarget.value });
     };
-    handleDateInput = (e: any) => {
-        this.setState({ date: e.target.value })
+    handleDateInput = (e: React.FormEvent<HTMLInputElement>): void => {
+        this.setState({ date: e.currentTarget.value })
     };
 
     render() {
@@ -75,16 +83,18 @@ class Forum extends React.Component<AuthProps, AuthState> {
                     placeholder="Main"
                     />
                     <input type="text"
+                    onChange={this.handleUserInput}
                     value={this.state.user}
+                    placeholder="Enter your name here!"
                     />
                     <input type="text"
                     onChange={this.handleDateInput}
-                    value={this.state.date}
+                    value ={this.state.date}
                     placeholder="Today's date"
                     />
                     <button
                     className="btn btn-large right"
-                    onClick={this.logForum}
+                    onClick={this.handleFormInput} // for some reason I had logForum here???????
                     >
                         Submit your post here!
                     </button>
@@ -93,4 +103,4 @@ class Forum extends React.Component<AuthProps, AuthState> {
     }
 }
 
-export default Forum
+export default ForumCreate

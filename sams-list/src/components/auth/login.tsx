@@ -33,7 +33,9 @@ class Login extends React.Component<AuthProps, AuthState> {
         }) .then (
             (response) => response.json()
         ) .then((data) => {
-            console.log(data)
+            this.props.setToken(
+                data.sessionToken
+            )
         }) .catch (( error) =>
             console.log(error)
         )
@@ -41,7 +43,7 @@ class Login extends React.Component<AuthProps, AuthState> {
 
     render() {
         return(
-            <form>
+            <div>
                 <h1>Login here!</h1>
                 <form onSubmit={this.submitHandler}>
                     <input placeholder="Email"
@@ -54,9 +56,9 @@ class Login extends React.Component<AuthProps, AuthState> {
                     type="password"
                     onChange={e => this.setState({password: e.target.value})}
                     required/>
+                    <button>Click me to sign in!</button>
                 </form>
-                <button>Click me to sign in!</button>
-            </form>
+            </div>
         )
     }
 }

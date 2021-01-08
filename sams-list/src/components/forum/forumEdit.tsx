@@ -1,29 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 
 interface AuthState{
-    title: String,
-    main: String,
+    title: string,
+    main: string,
+    mainId: string
     
 }
 
-interface AuthProps{
-    handleFormEdit: any
+interface ForumEditProps{
+    handleFormEdit: FormEvent
+    // value: FormEvent
 }
 
-class ForumEdit extends React.Component<AuthProps, AuthState>{
-    constructor(props: any) {
+class ForumEdit extends React.Component<ForumEditProps, AuthState>{
+    constructor(props: ForumEditProps) {
         super(props);
         this.state = {
             title: '',
             main: '',
-            
+            mainId: '',
         };
 
         this.handleFormEdit = this.handleFormEdit.bind(this)
     }
-        handleFormEdit(e: any) {
+        handleFormEdit(e: FormEvent) {
             e.preventDefault();
-            fetch(`http://localhost:3000/forum/update/${mainId}`, {
+            fetch(`http://localhost:3000/forum/update/${this.state.mainId}`, {
                 method: 'PUT',
                 body: JSON.stringify({forum: {title: this.state.title, main: this.state.main}}),
                 headers: new Headers({
@@ -36,18 +38,37 @@ class ForumEdit extends React.Component<AuthProps, AuthState>{
                 console.log(error)
             )
         }
-        handleTitleEdit = (e: any) => {
-            this.setState({ title: e.target.value});
+        handleTitleEdit = (e: React.FormEvent<HTMLInputElement>): void => {
+            this.setState({ title: e.currentTarget.value});
         }
-        handleMainInput = (e: any) => {
-            this.setState({ main: e.target.value })
+        handleMainEdit = (e: React.FormEvent<HTMLInputElement>): void => {
+            this.setState({ main: e.currentTarget.value })
         }
 
         render() {
             return(
                 <div>
                     <h3>Edit your post here!</h3>
+                    <h5>`(Pssst, no need to be embarrassed, but we would probably change that too)`</h5>
+                    <input type="text"
+                    onChange={this.handleTitleEdit}
+                    value={this.state.title}
+                    placeholder="Edit your title"
+                    />
+                    <input type="text"
+                    onChange={this.handleMainEdit}
+                    value={this.state.main}
+                    placeholder="Edit your body"
+                    />
+                    <button
+                    className="btn btn-large right"
+                    onClick={this.handleFormEdit}
+                    >
+                        Submit your edit here! 
+                    </button>
                 </div>
             )
         }
 }
+
+export default ForumEdit
