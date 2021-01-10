@@ -14,6 +14,7 @@ interface ForumCreateProps{
     // value: ForumCreateProps
     token: string 
     fetchForum: () => void
+    // handleForumDisplay: () => void
 }
 
 class ForumCreate extends React.Component<ForumCreateProps, ForumCreateState> {
@@ -40,6 +41,7 @@ class ForumCreate extends React.Component<ForumCreateProps, ForumCreateState> {
                 })
             }) .then((response) => response.json()
             ) .then ((data) => {
+                console.log("WORK MOTHERFUCKER I'LL KILL YOU")
                 console.log(data)
                 // ********** call fetchForum() as props  to call it so once user creates something it displays.
                 this.props.fetchForum()

@@ -9,6 +9,7 @@ interface ThreadCreateState{
 
 interface ThreadCreateProps{
     token: string
+    fetchThread: () => void
 }
 
 class ThreadCreate extends React.Component<ThreadCreateProps, ThreadCreateState> {

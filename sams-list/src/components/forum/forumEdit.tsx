@@ -4,12 +4,16 @@ interface AuthState{
     title: string,
     main: string,
     mainId: string
-    
+    // testExample: Array<{
+    //     thing: string
+    // }>
 }
 
 interface ForumEditProps{
-    handleFormEdit: FormEvent
+    handleFormEdit(e: FormEvent) : void
     // value: FormEvent
+    // fetchForum: () => void
+    token: string 
 }
 
 class ForumEdit extends React.Component<ForumEditProps, AuthState>{
@@ -19,6 +23,9 @@ class ForumEdit extends React.Component<ForumEditProps, AuthState>{
             title: '',
             main: '',
             mainId: '',
+            // testExample: []
+            
+            
         };
 
         this.handleFormEdit = this.handleFormEdit.bind(this)
@@ -29,7 +36,8 @@ class ForumEdit extends React.Component<ForumEditProps, AuthState>{
                 method: 'PUT',
                 body: JSON.stringify({forum: {title: this.state.title, main: this.state.main}}),
                 headers: new Headers({
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': this.props.token
                 })
             }) .then((response) => response.json()
             ) .then ((data) => {
