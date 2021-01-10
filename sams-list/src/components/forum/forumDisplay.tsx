@@ -65,7 +65,7 @@ class ForumShowAll extends React.Component<ForumShowAllProps, ForumShowAllState>
             console.log(error)
         )
     }
-                            // : Array<any> <--- NOTE FOR SAM: I HAD THIS NEXT TO PAREN ON 53
+                            // : Array<any> <--- NOTE FOR SAM: I HAD THIS NEXT TO PAREN below
         handleFormDisplay = ()  => {
             console.log("display has been fired")
             return this.state.forums.map((forum: Forum) => {
@@ -135,7 +135,7 @@ class ForumShowAll extends React.Component<ForumShowAllProps, ForumShowAllState>
 
                     {/* <ForumEdit handleTitleEdit={this.handleTitleEdit.bind(this)} token={this.props.token}/> */}
 
-                    {/* <ForumCard handleForumDisplay={this.handleFormDisplay} fetchForum={this.fetchForum.bind(this)} token={this.props.token} /> */}
+                    <ForumCard handleForumDisplay={this.handleFormDisplay} fetchForum={this.fetchForum.bind(this)} token={this.props.token} />
                     {/* PASS IN DELETE, EDIT IN AS WELL. JUST LIKE FORUM CREATE WAS PASSED IN */}
                 </div>
                 // *************** pass forumFetch as prop to forumCreate component (forumDisplay acts as Index)
