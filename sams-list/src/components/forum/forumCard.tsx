@@ -9,8 +9,8 @@ interface ForumDeleteState {
 }
 
 interface ForumDeleteProps {
-    handleFormDelete: FormEvent
-    onClick: FormEvent
+    // handleFormDelete: FormEvent
+    // onClick: FormEvent
     token: string
     handleForumDisplay: () => Array<any>
     fetchForum() : void

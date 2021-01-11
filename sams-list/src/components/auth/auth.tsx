@@ -11,6 +11,7 @@ interface AppState {
 interface AppProps {
     setToken: (newToken: string) => void;
     token: string;
+    // editRes: FormEvent
 }
 
 class Auth extends Component<AppProps, AppState> {
