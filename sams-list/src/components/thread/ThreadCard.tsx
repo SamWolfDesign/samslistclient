@@ -1,14 +1,18 @@
+//On click, should call function that says "yo, we're going back up to the top and gonna fire thread create". Then will bubble thread create, into thread display, then down into thread card (which does the same as forum card duh).
 import React, { useState, FormEvent } from "react";
 
 interface ThreadDeleteState {
   threads: [];
   mainId: string;
+  // deleteForum: FormEvent
 }
 
 interface ThreadDeleteProps {
-  handleThreadDelete: FormEvent;
-  onClick: FormEvent;
+  // handleFormDelete: FormEvent
+  // onClick: FormEvent
   token: string;
+  handleThreadDisplay: () => Array<any>;
+  fetchThread(): void;
 }
 
 type Thread = {
@@ -26,44 +30,33 @@ class ThreadCard extends React.Component<ThreadDeleteProps, ThreadDeleteState> {
     this.state = {
       mainId: "",
       threads: [],
+      // deleteForum: //SOMETHING GOES HERE OBVI
     };
+
     this.handleThreadDelete = this.handleThreadDelete.bind(this);
   }
   handleThreadDelete(e: FormEvent) {
     e.preventDefault();
     fetch(`http://localhost:3000/thread/delete/${this.state.mainId}`, {
       method: "DELETE",
-      body: JSON.stringify({ thread: { mainId: this.state.mainId } }),
+      body: JSON.stringify({ forum: { mainId: this.state.mainId } }),
       headers: new Headers({
         "Content-Type": "application/json",
         Authorization: this.props.token,
       }),
     });
+    // .then(() => this.state.deleteForum());
   }
 
   render() {
     return (
       <div>
         <div>
-          {this.state.threads.map((thread: Thread) => (
-            <ul key={thread.id}>
-              <li>
-                <h3>{thread}</h3>
-              </li>
-              <li>
-                <h3>{thread.main}</h3>
-              </li>
-              <li>
-                <h3>{thread.user}</h3>
-              </li>
-              <li>
-                <h3>{thread.date}</h3>
-              </li>
-            </ul>
-          ))}
+          {/* {this.props.handleFormDisplay()} */}
+          {/*   */}
         </div>
         <button className="btn btn-large" onClick={this.handleThreadDelete}>
-          You DO have the ability to click me.
+          I am a button.
         </button>
       </div>
     );

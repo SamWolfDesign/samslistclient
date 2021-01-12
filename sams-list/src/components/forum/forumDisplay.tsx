@@ -7,6 +7,7 @@ import React, { useState, FormEvent } from "react";
 import ForumCreate from "./forumCreate";
 import ForumCard from "./forumCard";
 import ForumEdit from "./forumEdit";
+import ThreadShowAll from "../thread/threadDisplay";
 
 interface ForumShowAllState {
   forums: [];
@@ -228,6 +229,7 @@ class ForumShowAll extends React.Component<
         ) : (
           <></>
         )}
+        <ThreadShowAll token={this.props.token} />
       </div>
       // *************** pass forumFetch as prop to forumCreate component (forumDisplay acts as Index)
     );
@@ -235,6 +237,10 @@ class ForumShowAll extends React.Component<
 }
 
 export default ForumShowAll;
+
+// assoc where include reply tab, then when include comes with replies for message,
+
+// essentially, a map within a map
 
 // feedMapper = () => {
 //     return this.state.dataTable.map((feeds: any, index) => {
