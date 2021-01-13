@@ -23,7 +23,7 @@ class Auth extends Component<AppProps, AppState> {
     // const tokenProps = { token: this.state.token }
     return (
       <div>
-        <h1>Auth</h1>
+        <h1>Sam's List</h1>
         <Signup />
         <Login setToken={this.props.setToken} />
         {/* <ForumShowAll token={this.props.token}/> */}

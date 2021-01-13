@@ -8,6 +8,7 @@ import ThreadCreate from "./threadCreate";
 import ThreadCard from "./ThreadCard";
 import ThreadEdit from "./ThreadEdit";
 import APIURL from '../../helpers/environment';
+import { Button } from 'antd';
 
 interface ThreadShowAllState {
   threads: [];
@@ -112,23 +113,23 @@ class ThreadShowAll extends React.Component<
           <li>{thread.user}</li>
           <li>{thread.date}</li>
           <li>
-            <button
+            <Button type="primary"
               onClick={() => {
                 this.updateMyThread(thread);
                 this.updateOn();
               }}
             >
               Edit
-            </button>
+            </Button>
           </li>
           <li>
-            <button
+            <Button type="primary"
               onClick={() => {
                 this.handleThreadDelete(thread);
               }}
             >
               Delete
-            </button>
+            </Button>
           </li>
         </ul>
       );

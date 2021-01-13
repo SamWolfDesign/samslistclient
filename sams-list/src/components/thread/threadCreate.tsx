@@ -1,5 +1,6 @@
 import React, { Component, FormEvent, SyntheticEvent } from "react";
 import APIURL from '../../helpers/environment';
+import { Button } from 'antd';
 
 interface ThreadCreateState {
   title: string;
@@ -105,12 +106,12 @@ class ThreadCreate extends React.Component<
           value={this.state.date}
           placeholder="Today's date"
         />
-        <button
+        <Button type="primary"
           className="btn btn-large right"
           onClick={this.handleThreadInput} // for some reason I had logForum here???????
         >
           Submit your post here!
-        </button>
+        </Button>
       </div>
     );
   }

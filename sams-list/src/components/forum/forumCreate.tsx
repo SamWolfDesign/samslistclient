@@ -1,5 +1,6 @@
 import React, { Component, FormEvent, SyntheticEvent } from "react";
 import APIURL from '../../helpers/environment';
+import { Button } from 'antd';
 
 interface ForumCreateState {
   title: string;
@@ -103,12 +104,12 @@ class ForumCreate extends React.Component<ForumCreateProps, ForumCreateState> {
           value={this.state.date}
           placeholder="Today's date"
         />
-        <button
+        <Button type="primary"
           className="btn btn-large right"
           onClick={this.handleFormInput} // for some reason I had logForum here???????
         >
           Submit your post here!
-        </button>
+        </Button>
       </div>
     );
   }

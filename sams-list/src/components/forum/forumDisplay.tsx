@@ -9,6 +9,7 @@ import ForumCard from "./forumCard";
 import ForumEdit from "./forumEdit";
 import ThreadShowAll from "../thread/threadDisplay";
 import APIURL from '../../helpers/environment';
+import { Button } from 'antd';
 
 interface ForumShowAllState {
   forums: [];
@@ -137,23 +138,23 @@ class ForumShowAll extends React.Component<
           {/* <li>{this.handleThreadDisplay}</li> */}
           
           <li>
-            <button
+            <Button type="primary"
               onClick={() => {
                 this.updateMyForum(forum);
                 this.updateOn();
               }}
             >
               Edit
-            </button>
+            </Button>
           </li>
           <li>
-            <button
+            <Button type="primary"
               onClick={() => {
                 this.handleFormDelete(forum);
               }}
             >
               Delete
-            </button>
+            </Button>
           </li>
         </ul>
       );
@@ -195,10 +196,9 @@ class ForumShowAll extends React.Component<
   render() {
     return (
       <div>
-        Sam's List
+        
         <h1>
-          Welcome! This is just some test to fill a spot right now. Don't read
-          too much into it, ya dummy!
+          Welcome to Sam's List, the last bastion of free speech on the internet! Even though this IS your safe-space to say whatever you want, there are OBVIOUSLY exceptions. Please note that any hate speech, excessive abuse, solicitation of illicit materials, or the spreading of false information are prohibited and will result in the removal of your post, and possible banning from the site. 
         </h1>
         <div>
           {this.handleFormDisplay()}
