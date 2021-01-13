@@ -42,7 +42,7 @@ class ThreadCard extends React.Component<ThreadDeleteProps, ThreadDeleteState> {
       body: JSON.stringify({ forum: { mainId: this.state.mainId } }),
       headers: new Headers({
         "Content-Type": "application/json",
-        Authorization: this.props.token,
+        "Authorization": this.props.token,
       }),
     });
     // .then(() => this.state.deleteForum());

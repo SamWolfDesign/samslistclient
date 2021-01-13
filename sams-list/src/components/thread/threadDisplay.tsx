@@ -54,27 +54,6 @@ class ThreadShowAll extends React.Component<
   //could be type annotations, or index?
   //map method, obj mapping over and key (most ppl put index)
 
-  // index() {
-
-  // }
-  // handleFormEdit(e: FormEvent) {
-  //     e.preventDefault();
-  //     fetch(`http://localhost:3000/forum/update/${this.state.mainId}`, {
-  //         method: 'PUT',
-  //         body: JSON.stringify({forum: {title: this.state.title, main: this.state.main}}),
-  //         headers: new Headers({
-  //             'Content-Type': 'application/json',
-  //             'Authorization': this.props.token
-  //         })
-  //     }) .then((response) => response.json()
-  //     ) .then ((data) => {
-  //         console.log(data)
-  //     }) .catch ((error ) =>
-  //         console.log(error)
-  //     )
-  // }
-  // : Array<any> <--- NOTE FOR SAM: I HAD THIS NEXT TO PAREN below
-
   updateMyThread = (thread: any) => {
     this.setState({
       threadUpdate: thread,
@@ -98,7 +77,7 @@ class ThreadShowAll extends React.Component<
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
-        // 'Authorization': this.props.token,
+        "Authorization": this.props.token,
       }),
     })
       .then((res) => res.json())
@@ -115,9 +94,11 @@ class ThreadShowAll extends React.Component<
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",
-        Authorization: `${localStorage.getItem("token")}`,
+        "Authorization": `${localStorage.getItem("token")}`,
       }),
-    }).then(() => this.fetchThread());
+    })
+      .then(() => this.fetchThread())
+      .then(() => console.log("thread deleted"));
   }
   handleThreadDisplay = () => {
     // console.log("display has been fired")

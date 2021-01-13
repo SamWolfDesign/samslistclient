@@ -99,7 +99,7 @@ class ForumShowAll extends React.Component<
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
-        // 'Authorization': this.props.token,
+        "Authorization": this.props.token,
       }),
     })
       .then((res) => res.json())
@@ -124,6 +124,8 @@ class ForumShowAll extends React.Component<
   handleFormDisplay = () => {
     // console.log("display has been fired")
     return this.state.forums.map((forum: Forum) => {
+      //build if else statement passing forum id through
+      //so if .post contains comments
       // console.log("display has been fired2")
       return (
         <ul key={forum.mainId}>
@@ -131,6 +133,8 @@ class ForumShowAll extends React.Component<
           <li>{forum.main}</li>
           <li>{forum.user}</li>
           <li>{forum.date}</li>
+          {/* <li>{this.handleThreadDisplay}</li> */}
+          
           <li>
             <button
               onClick={() => {
