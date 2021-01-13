@@ -8,6 +8,7 @@ import ForumCreate from "./forumCreate";
 import ForumCard from "./forumCard";
 import ForumEdit from "./forumEdit";
 import ThreadShowAll from "../thread/threadDisplay";
+import APIURL from '../../helpers/environment';
 
 interface ForumShowAllState {
   forums: [];
@@ -95,7 +96,7 @@ class ForumShowAll extends React.Component<
   };
   fetchForum() {
     console.log("starting fetch for display");
-    fetch(`http://localhost:3000/forum/`, {
+    fetch(`${APIURL}/forum/`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -113,7 +114,7 @@ class ForumShowAll extends React.Component<
     console.log("whole fetch is done");
   }
   handleFormDelete(forum: any) {
-    fetch(`http://localhost:3000/forum/delete/${forum.id}`, {
+    fetch(`${APIURL}/forum/delete/${forum.id}`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",

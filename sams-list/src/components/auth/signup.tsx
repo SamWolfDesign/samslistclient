@@ -1,6 +1,7 @@
 import React, {useState, Component, FormEvent} from 'react';
 // import { isConstructorDeclaration } from 'typescript';
 import {TextField} from '@material-ui/core'
+import APIURL from '../../helpers/environment';
 
 // type AuthState = { onClickHandler: React.FC }
 interface AuthState{
@@ -32,7 +33,7 @@ class Signup extends React.Component<{}, AuthState> {
     }
         submitHandler(e: FormEvent) {
             e.preventDefault();
-            fetch("http://localhost:3000/user/create", {
+            fetch(`${APIURL}/user/create`, {
                 method: 'POST',
                 body: JSON.stringify({user: {firstName: this.state.firstName, lastName: this.state.lastName, email: this.state.email, password: this.state.password, role: this.state.role }}),
                 headers: new Headers({

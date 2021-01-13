@@ -1,5 +1,6 @@
 // import classes from '*.module.css';
 import React, {useState, Component, FormEvent} from 'react';
+import APIURL from '../../helpers/environment';
 
 interface AuthState{
     email: string,
@@ -24,7 +25,7 @@ class Login extends React.Component<AuthProps, AuthState> {
     }
     submitHandler(e: FormEvent) {
         e.preventDefault();
-        fetch("http://localhost:3000/user/login", {
+        fetch(`${APIURL}/user/login`, {
             method: 'POST',
             body: JSON.stringify({user: {email: this.state.email, password: this.state.password}}),
             headers: new Headers({

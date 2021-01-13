@@ -7,6 +7,7 @@ import React, { useState, FormEvent } from "react";
 import ThreadCreate from "./threadCreate";
 import ThreadCard from "./ThreadCard";
 import ThreadEdit from "./ThreadEdit";
+import APIURL from '../../helpers/environment';
 
 interface ThreadShowAllState {
   threads: [];
@@ -73,7 +74,7 @@ class ThreadShowAll extends React.Component<
   };
   fetchThread() {
     console.log("starting fetch for display thread");
-    fetch(`http://localhost:3000/thread/`, {
+    fetch(`${APIURL}/thread/`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -90,7 +91,7 @@ class ThreadShowAll extends React.Component<
     console.log("whole fetch is done");
   }
   handleThreadDelete(thread: any) {
-    fetch(`http://localhost:3000/thread/delete/${thread.id}`, {
+    fetch(`${APIURL}/thread/delete/${thread.id}`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",

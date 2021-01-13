@@ -1,4 +1,5 @@
 import React, { Component, FormEvent, SyntheticEvent } from "react";
+import APIURL from '../../helpers/environment';
 
 interface ForumCreateState {
   title: string;
@@ -30,7 +31,7 @@ class ForumCreate extends React.Component<ForumCreateProps, ForumCreateState> {
   }
   handleFormInput(e: FormEvent) {
     e.preventDefault();
-    fetch("http://localhost:3000/forum/create", {
+    fetch(`${APIURL}/forum/create`, {
       method: "POST",
       body: JSON.stringify({
         forum: {

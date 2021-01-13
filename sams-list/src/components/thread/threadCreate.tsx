@@ -1,4 +1,5 @@
 import React, { Component, FormEvent, SyntheticEvent } from "react";
+import APIURL from '../../helpers/environment';
 
 interface ThreadCreateState {
   title: string;
@@ -33,7 +34,7 @@ class ThreadCreate extends React.Component<
   }
   handleThreadInput(e: FormEvent) {
     e.preventDefault();
-    fetch("http://localhost:3000/thread/create", {
+    fetch(`${APIURL}/thread/create`, {
       method: "POST",
       body: JSON.stringify({
         thread: {

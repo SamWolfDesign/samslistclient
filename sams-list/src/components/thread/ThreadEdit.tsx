@@ -1,6 +1,7 @@
 // NEW VV
 
 import React, { useState, FormEvent } from "react";
+import APIURL from '../../helpers/environment';
 
 interface AuthState {
   title: string;
@@ -34,7 +35,7 @@ class ThreadEdit extends React.Component<ThreadEditProps, AuthState> {
     console.log(this.props.token);
     e.preventDefault();
     fetch(
-      `http://localhost:3000/thread/update/${this.props.updateMyThread.id}`,
+      `${APIURL}/thread/update/${this.props.updateMyThread.id}`,
       {
         method: "PUT",
         body: JSON.stringify({

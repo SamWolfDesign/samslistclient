@@ -1,4 +1,5 @@
 import React, { useState, FormEvent } from 'react';
+import APIURL from '../../helpers/environment';
 
 interface AuthState{
     title: string,
@@ -35,7 +36,7 @@ class ForumEdit extends React.Component<ForumEditProps, AuthState>{
         handleFormEdit(e: FormEvent) {
             console.log(this.props.token);
             e.preventDefault();
-            fetch(`http://localhost:3000/forum/update/${this.props.updateMyForum.id}`, {
+            fetch(`${APIURL}/forum/update/${this.props.updateMyForum.id}`, {
                 method: 'PUT',
                 body: JSON.stringify({forum: {title: this.state.title, main: this.state.main}}),
                 headers: new Headers({
