@@ -19,11 +19,14 @@ interface ThreadShowAllState {
   date: string;
   threadUpdate: any;
   setUpdateActive: boolean;
+  forumId: number
 }
 
 interface ThreadShowAllProps {
   token: string;
   // editRes: FormEvent
+  activeForum: any
+  forumId: number
 }
 
 type Thread = {
@@ -50,6 +53,7 @@ class ThreadShowAll extends React.Component<
       date: "",
       threadUpdate: {},
       setUpdateActive: false,
+      forumId: this.props.activeForum.id
     };
     this.handleThreadDisplay = this.handleThreadDisplay.bind(this);
   }
@@ -75,7 +79,7 @@ class ThreadShowAll extends React.Component<
   };
   fetchThread() {
     console.log("starting fetch for display thread");
-    fetch(`${APIURL}/thread/`, {
+    fetch(`${APIURL}/thread/${this.props.forumId}`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -85,10 +89,10 @@ class ThreadShowAll extends React.Component<
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        console.log(data.threads);
+        console.log("test one", data.threads);
         this.setState({ threads: data }); //userData.feed?? Grab token, then dive in to grab thread assoc w/ user
       });
-    console.log(this.state.threads);
+    console.log("test two", this.state.threads);
     console.log("whole fetch is done");
   }
   handleThreadDelete(thread: any) {
@@ -103,13 +107,14 @@ class ThreadShowAll extends React.Component<
       .then(() => console.log("thread deleted"));
   }
   handleThreadDisplay = () => {
-    // console.log("display has been fired")
-    return this.state.threads.map((thread: Thread) => {
+    // console.log("display has been fired") //this.state.threads.length &&
+   {this.state.threads.map((thread: Thread, index: number) => {
       // console.log("display has been fired2")
       return (
-        <ul key={thread.mainId}>
+        <ul key={index}>
           <li>{thread.title}</li>
           <li>{thread.main}</li>
+          <li>can you see me!?!?!?!?!?!</li>
           <li>{thread.user}</li>
           <li>{thread.date}</li>
           <li>
@@ -133,7 +138,7 @@ class ThreadShowAll extends React.Component<
           </li>
         </ul>
       );
-    });
+    })};
   };
 
   componentDidMount() {
@@ -144,18 +149,52 @@ class ThreadShowAll extends React.Component<
     return (
       <div>
         Sam's List
-        <div>{this.handleThreadDisplay()}</div>{" "}
+        <div>{() => this.handleThreadDisplay()}</div>{" "}
         {/* NOTE FOR SAM. THIS IS PASSING DOWN VV */}
+        {this.state.threads.map((thread: Thread, index: number) => {
+      // console.log("display has been fired2")
+      return (
+        <ul key={index}>
+          <li>{thread.title}</li>
+          <li>{thread.main}</li>
+          <li>can you see me!?!?!?!?!?!</li>
+          <li>{thread.user}</li>
+          <li>{thread.date}</li>
+          <li>
+            <Button type="primary"
+              onClick={() => {
+                this.updateMyThread(thread);
+                this.updateOn();
+              }}
+            >
+              Edit
+            </Button>
+          </li>
+          <li>
+            <Button type="primary"
+              onClick={() => {
+                this.handleThreadDelete(thread);
+              }}
+            >
+              Delete
+            </Button>
+          </li>
+        </ul>
+      );
+    })};
         <ThreadCreate
           fetchThread={this.fetchThread.bind(this)}
           token={this.props.token}
+          forumId={this.props.forumId}
         />
         {/* {this.state.} */}
         {/* <ForumEdit handleTitleEdit={this.handleTitleEdit.bind(this)} token={this.props.token}/> */}
         <ThreadCard
-          handleThreadDisplay={this.handleThreadDisplay}
+         handleThreadDisplay={this.handleThreadDisplay}
           fetchThread={this.fetchThread.bind(this)}
           token={this.props.token}
+          // forumId={this.state.forumId}
+          
         />
         {this.state.setUpdateActive ? (
           <ThreadEdit

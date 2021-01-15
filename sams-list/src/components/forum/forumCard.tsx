@@ -13,7 +13,7 @@ interface ForumDeleteProps {
     // handleFormDelete: FormEvent
     // onClick: FormEvent
     token: string
-    handleForumDisplay: () => Array<any>
+    // handleForumDisplay: () => void
     fetchForum() : void
 }
 

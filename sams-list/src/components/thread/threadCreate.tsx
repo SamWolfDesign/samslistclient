@@ -15,6 +15,7 @@ interface ThreadCreateProps {
   token: string;
   fetchThread: () => void;
   // handleThreadDisplay: () => void
+  forumId: number
 }
 
 class ThreadCreate extends React.Component<
@@ -41,8 +42,9 @@ class ThreadCreate extends React.Component<
         thread: {
           title: this.state.title,
           main: this.state.main,
-          user: this.state.user,
+          // user: this.state.user,
           date: this.state.date,
+          forumId: this.props.forumId,
         },
       }),
       headers: new Headers({
@@ -80,7 +82,7 @@ class ThreadCreate extends React.Component<
   render() {
     return (
       <div>
-        <h3>Create your post here!</h3>
+        <h3>Create your response here!</h3>
         <h5>Please remember to be respectful in your posting.</h5>
         <input
           type="text"

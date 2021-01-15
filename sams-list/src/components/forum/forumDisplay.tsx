@@ -3,7 +3,7 @@
 // THIS IS NOW PARENT OF CREATE DELETE EDIT (FORUM)
 
 // import userEvent from '@testing-library/user-event';
-import React, { useState, FormEvent } from "react";
+import React, { useState, FormEvent, SyntheticEvent } from "react";
 import ForumCreate from "./forumCreate";
 import ForumCard from "./forumCard";
 import ForumEdit from "./forumEdit";
@@ -12,19 +12,56 @@ import APIURL from '../../helpers/environment';
 import { Button } from 'antd';
 
 interface ForumShowAllState {
-  forums: [];
-  mainId: string;
-  title: string;
-  main: string;
-  user: string;
-  date: string;
-  forumUpdate: any;
+  forums: RootObject[];
+  // mainId: string;
+  // title: string;
+  // main: string;
+  // user: string;
+  // date: string;
+  forumUpdate: RootObject;
   setUpdateActive: boolean;
+  activeForum: RootObject;
+  forumId: number
 }
 
 interface ForumShowAllProps {
   token: string;
   // editRes: FormEvent
+}
+
+interface RootObject {
+  id: number;
+  title: string;
+  main: string;
+  date: string;
+  posterId_fk: number;
+  // createdAt: string;
+  // updatedAt: string;
+  userId: number;
+  // user: User | null ;
+  threads: Thread[];
+}
+
+interface Thread {
+  id: number;
+  title: string;
+  main: string;
+  date: string;
+  threadId_fk: number;
+  // createdAt: string;
+  // updatedAt: string;
+  userId?: any;
+  forumId: number;
+}
+
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  role: string;
+  
 }
 
 type Forum = {
@@ -42,17 +79,44 @@ class ForumShowAll extends React.Component<
 > {
   constructor(props: ForumShowAllProps) {
     super(props);
+    this.forumsArray = this.forumsArray.bind(this)
     this.state = {
+      forumId: 0,
       forums: [],
-      mainId: "",
-      title: "",
-      main: "",
-      user: "",
-      date: "",
-      forumUpdate: {},
+      forumUpdate: {
+        id: 0,
+        title: '',
+        main: '',
+        date: '',
+        posterId_fk: 0,
+        // createdAt: '',
+        // updatedAt: '',
+        userId: 0,
+        // user: {
+        //   id: 0,
+        //   firstName: '',
+        //   lastName: '',
+        //   email: '',
+        //   password: '',
+        //   role: '',
+          
+        // },
+        threads: [],
+      },
       setUpdateActive: false,
+      activeForum: {
+        id: 0,
+        title: '',
+        main: '',
+        date: '',
+        posterId_fk: 0,
+        // createdAt: '',
+        // updatedAt: '',
+        userId: 0,
+        threads: [],
+      }
     };
-    this.handleFormDisplay = this.handleFormDisplay.bind(this);
+    // this.handleFormDisplay = this.handleFormDisplay.bind(this);
   }
   //could be type annotations, or index?
   //map method, obj mapping over and key (most ppl put index)
@@ -67,7 +131,7 @@ class ForumShowAll extends React.Component<
   //         body: JSON.stringify({forum: {title: this.state.title, main: this.state.main}}),
   //         headers: new Headers({
   //             'Content-Type': 'application/json',
-  //             'Authorization': this.props.token
+  //              Authorization: this.props.token
   //         })
   //     }) .then((response) => response.json()
   //     ) .then ((data) => {
@@ -107,12 +171,18 @@ class ForumShowAll extends React.Component<
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        console.log(data.forums);
+        console.log('Nother lil strang ==> ', data);
         // this.state.forums.push(data.forums)
-        this.setState({ forums: data }); //userData.feed?? Grab token, then dive in to grab forum assoc w/ user
+        this.forumsArray(data) //userData.feed?? Grab token, then dive in to grab forum assoc w/ user
       });
-    console.log(this.state.forums);
+    
+    console.log('Forum state: ',this.state.forums);
     console.log("whole fetch is done");
+  }
+  forumsArray(arrayData: RootObject[]){
+    this.setState({
+      forums: arrayData
+    })
   }
   handleFormDelete(forum: any) {
     fetch(`${APIURL}/forum/delete/${forum.id}`, {
@@ -123,43 +193,55 @@ class ForumShowAll extends React.Component<
       }),
     }).then(() => this.fetchForum());
   }
-  handleFormDisplay = () => {
-    // console.log("display has been fired")
-    return this.state.forums.map((forum: Forum) => {
-      //build if else statement passing forum id through
-      //so if .post contains comments
-      // console.log("display has been fired2")
-      return (
-        <ul key={forum.mainId}>
-          <li>{forum.title}</li>
-          <li>{forum.main}</li>
-          <li>{forum.user}</li>
-          <li>{forum.date}</li>
-          {/* <li>{this.handleThreadDisplay}</li> */}
+  // handleFormDisplay = () => {
+  //   // console.log("display has been fired")
+  //  this.state.forums.length && this.state.forums.map((forum: Forum) => {
+  //     //build if else statement passing forum id through
+  //     //so if .post contains comments
+  //     // console.log("display has been fired2")
+  //     return (
+  //       // <ul key={forum.mainId}>
+  //       //   <div>
+  //       //   <li>{forum.title}</li>
+  //       //   <li>{forum.main}</li>
+  //       //   <li>{forum.user}</li>
+  //       //   <li>{forum.date}</li>
+  //       //   {/* <li>{this.handleThreadDisplay}</li> */}
           
-          <li>
-            <Button type="primary"
-              onClick={() => {
-                this.updateMyForum(forum);
-                this.updateOn();
-              }}
-            >
-              Edit
-            </Button>
-          </li>
-          <li>
-            <Button type="primary"
-              onClick={() => {
-                this.handleFormDelete(forum);
-              }}
-            >
-              Delete
-            </Button>
-          </li>
-        </ul>
-      );
-    });
-  };
+  //       //   <li>
+  //       //     <Button type="primary"
+  //       //       onClick={() => {
+  //       //         this.updateMyForum(forum);
+  //       //         this.updateOn();
+  //       //       }}
+  //       //     >
+  //       //       Edit
+  //       //     </Button>
+  //       //   </li>
+  //       //   <li>
+  //       //     <Button type="primary"
+  //       //       onClick={() => {
+  //       //         this.handleFormDelete(forum);
+  //       //       }}
+  //       //     >
+  //       //       Delete
+  //       //     </Button>
+  //       //   </li>
+  //       //   <li>
+  //       //     <Button type="primary"
+  //       //       onClick={() => {this.setState({activeForum: forum})}}
+  //       //     >
+  //       //       Create a response!!
+  //       //     </Button>
+  //       //   </li>
+  //       //   </div>
+  //       //   <div>
+
+  //       //   </div>
+  //       // </ul>
+  //     );
+  //   });
+  // };
 
   componentDidMount() {
     this.fetchForum();
@@ -193,15 +275,75 @@ class ForumShowAll extends React.Component<
   //     this.setState({ main: e.currentTarget.value })
   // }
 
+
+
+// modal render as create thread button. when click on button open modal, will also pass forum info as prop through component (will grab forum id). Make form inputs that will create fetch.
+
+
+
   render() {
     return (
       <div>
-        
+        <div>
+            <Button type="primary"
+              onClick={() => {
+                console.log(this.state.forums)
+              }}
+            >
+              fetch
+            </Button>
+        </div>
+            
         <h1>
           Welcome to Sam's List, the last bastion of free speech on the internet! Even though this IS your safe-space to say whatever you want, there are OBVIOUSLY exceptions. Please note that any hate speech, excessive abuse, solicitation of illicit materials, or the spreading of false information are prohibited and will result in the removal of your post, and possible banning from the site. 
         </h1>
         <div>
-          {this.handleFormDisplay()}
+       {this.state.forums.length &&  this.state.forums.map((forum: RootObject)  =>{
+         console.log("Forum --------> ", forum)
+        //  this.setState({forumId: forum.id})
+         return(
+           
+        <ul key={forum.id}>
+          <div>
+          <li>{forum.title}</li>
+          <li>{forum.main}</li>
+          {/* <li>{forum.user}</li> */}
+          <li>{forum.date}</li>
+          {/* <li>{this.handleThreadDisplay}</li> */}
+          
+
+          <li>
+            <Button type="primary"
+              onClick={() => {
+                this.updateMyForum(forum);
+                this.updateOn();
+              }}
+            >
+              Edit
+            </Button>
+          </li>
+          <li>
+            <Button type="primary"
+              onClick={() => {
+                this.handleFormDelete(forum);
+              }}
+            >
+              Delete
+            </Button>
+          </li>
+          <li>
+            <Button type="primary"
+              onClick={() => {this.setState({activeForum: forum}); console.log(forum)}}
+            >
+              Create a response!!
+              <ThreadShowAll forumId={forum.id} token={this.props.token} activeForum={this.state.activeForum} />
+            </Button>
+          </li>
+          </div>
+        </ul>
+         )
+} ) }
+          {/* {this.handleFormDisplay} */}
           {/* {this.state.forums.map((forum: Forum) => (
                             <ul key ={forum.id}>
                                 <li><h3>{forum}</h3></li>
@@ -213,13 +355,14 @@ class ForumShowAll extends React.Component<
         </div>{" "}
         {/* NOTE FOR SAM. THIS IS PASSING DOWN VV */}
         <ForumCreate
+          // handleForumDisplay={this.handleFormDisplay}
           fetchForum={this.fetchForum.bind(this)}
           token={this.props.token}
         />
         {/* {this.state.} */}
         {/* <ForumEdit handleTitleEdit={this.handleTitleEdit.bind(this)} token={this.props.token}/> */}
         <ForumCard
-          handleForumDisplay={this.handleFormDisplay}
+          // handleForumDisplay={this.handleFormDisplay}
           fetchForum={this.fetchForum.bind(this)}
           token={this.props.token}
         />
@@ -234,7 +377,7 @@ class ForumShowAll extends React.Component<
         ) : (
           <></>
         )}
-        <ThreadShowAll token={this.props.token} />
+        {/* <ThreadShowAll token={this.props.token} activeForum={this.state.activeForum} /> */}
       </div>
       // *************** pass forumFetch as prop to forumCreate component (forumDisplay acts as Index)
     );
@@ -243,42 +386,3 @@ class ForumShowAll extends React.Component<
 
 export default ForumShowAll;
 
-// assoc where include reply tab, then when include comes with replies for message,
-
-// essentially, a map within a map
-
-// feedMapper = () => {
-//     return this.state.dataTable.map((feeds: any, index) => {
-//         return(
-//             <div>
-//                 <Card
-//                     key={index}
-//                     id='postCard'
-//                     hoverable
-//                     cover={<img id='postImage' style={{ width: 300, height: 350 }} alt="user posted image" src={feeds.image} />}
-//                 >
-//                     <p id='cardUname'>{feeds.userName}</p>
-//                     <p id='cardText'>{feeds.text}</p>
-//                     <p id='cardlink'><a target='blank'>{feeds.link}</a></p>
-//                     <Comments setUsername={this.props.setUserName} setComments={this.state.comment} token={this.props.token} fetchUsers={this.fetchUsers}/>
-//                 </Card>
-//             </div>
-//         )
-//     })
-// }
-
-// componentDidMount(){
-//     this.fetchFeeds();
-//     this.fetchUsers(this.state.dataTable);
-// }
-// render() {
-//     return(
-//         <div id='feedDiv'>
-//             <CreatePost setUsername={this.state.username} setImage={this.state.image} setText={this.state.text} setLink={this.state.link} fetchUsers={this.fetchFeeds} token={this.props.token} />
-//             <Container id='feedContainer'>
-//                 {this.feedMapper()}
-//             </Container>
-//             <Footer />
-//         </div>
-//     )
-// }

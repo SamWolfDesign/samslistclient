@@ -12,7 +12,7 @@ interface ThreadDeleteProps {
   // handleFormDelete: FormEvent
   // onClick: FormEvent
   token: string;
-  handleThreadDisplay: () => Array<any>;
+  handleThreadDisplay: () => void;
   fetchThread(): void;
 }
 
