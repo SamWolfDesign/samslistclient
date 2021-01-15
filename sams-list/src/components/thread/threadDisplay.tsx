@@ -148,18 +148,18 @@ class ThreadShowAll extends React.Component<
   render() {
     return (
       <div>
-        Sam's List
+        
         <div>{() => this.handleThreadDisplay()}</div>{" "}
         {/* NOTE FOR SAM. THIS IS PASSING DOWN VV */}
         {this.state.threads.map((thread: Thread, index: number) => {
       // console.log("display has been fired2")
       return (
         <ul key={index}>
-          <li>{thread.title}</li>
-          <li>{thread.main}</li>
-          <li>can you see me!?!?!?!?!?!</li>
-          <li>{thread.user}</li>
-          <li>{thread.date}</li>
+          <li><h2>{thread.title}</h2></li>
+          <li><h4>{thread.main}</h4></li>
+          {/* <li>can you see me!?!?!?!?!?!</li> */}
+          {/* <li>{thread.user}</li> */}
+          <li><h4>{thread.date}</h4></li>
           <li>
             <Button type="primary"
               onClick={() => {
@@ -170,6 +170,7 @@ class ThreadShowAll extends React.Component<
               Edit
             </Button>
           </li>
+          <br></br>
           <li>
             <Button type="primary"
               onClick={() => {

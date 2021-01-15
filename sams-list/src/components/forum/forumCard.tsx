@@ -57,12 +57,7 @@ class ForumCard extends React.Component<ForumDeleteProps, ForumDeleteState>{
                         {/* {this.props.handleFormDisplay()} */}
                         {/*   */}
                     </div>
-                    <button
-                        className="btn btn-large"
-                        onClick={this.handleFormDelete}
-                        >
-                            I am a button.
-                    </button>
+                    
                 </div>
             )
         }

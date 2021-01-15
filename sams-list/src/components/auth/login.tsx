@@ -1,6 +1,7 @@
 // import classes from '*.module.css';
 import React, {useState, Component, FormEvent} from 'react';
 import APIURL from '../../helpers/environment';
+import { Button } from 'antd';
 
 interface AuthState{
     email: string,
@@ -57,7 +58,7 @@ class Login extends React.Component<AuthProps, AuthState> {
                     type="password"
                     onChange={e => this.setState({password: e.target.value})}
                     required/>
-                    <button>Click me to sign in!</button>
+                    <Button type="primary">Click me to sign in!</Button>
                 </form>
             </div>
         )

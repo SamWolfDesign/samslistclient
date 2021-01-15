@@ -2,6 +2,7 @@ import React, {useState, Component, FormEvent} from 'react';
 // import { isConstructorDeclaration } from 'typescript';
 import {TextField} from '@material-ui/core'
 import APIURL from '../../helpers/environment';
+import { Button } from 'antd';
 
 // type AuthState = { onClickHandler: React.FC }
 interface AuthState{
@@ -90,7 +91,7 @@ class Signup extends React.Component<{}, AuthState> {
                     onChange={e => this.setState({role: e.target.value})}
                     required/>
                     </form>
-                    <button>Click me to test me!</button>
+                    <Button type="primary">Click me to signup!</Button>
                 </form>
             )
         }

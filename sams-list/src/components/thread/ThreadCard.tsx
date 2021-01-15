@@ -56,9 +56,7 @@ class ThreadCard extends React.Component<ThreadDeleteProps, ThreadDeleteState> {
           {/* {this.props.handleFormDisplay()} */}
           {/*   */}
         </div>
-        <button className="btn btn-large" onClick={this.handleThreadDelete}>
-          I am a button.
-        </button>
+        
       </div>
     );
   }

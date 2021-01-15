@@ -9,7 +9,9 @@ import ForumCard from "./forumCard";
 import ForumEdit from "./forumEdit";
 import ThreadShowAll from "../thread/threadDisplay";
 import APIURL from '../../helpers/environment';
-import { Button } from 'antd';
+import { Button, Card } from 'antd';
+
+const { Meta } = Card;
 
 interface ForumShowAllState {
   forums: RootObject[];
@@ -285,18 +287,20 @@ class ForumShowAll extends React.Component<
     return (
       <div>
         <div>
-            <Button type="primary"
+            <button
               onClick={() => {
                 console.log(this.state.forums)
               }}
             >
               fetch
-            </Button>
+            </button>
         </div>
             
         <h1>
           Welcome to Sam's List, the last bastion of free speech on the internet! Even though this IS your safe-space to say whatever you want, there are OBVIOUSLY exceptions. Please note that any hate speech, excessive abuse, solicitation of illicit materials, or the spreading of false information are prohibited and will result in the removal of your post, and possible banning from the site. 
         </h1>
+        <br></br>
+        <br></br>
         <div>
        {this.state.forums.length &&  this.state.forums.map((forum: RootObject)  =>{
          console.log("Forum --------> ", forum)
@@ -305,39 +309,39 @@ class ForumShowAll extends React.Component<
            
         <ul key={forum.id}>
           <div>
-          <li>{forum.title}</li>
-          <li>{forum.main}</li>
+          <li><h1>{forum.title}</h1></li>
+          <li><h3>{forum.main}</h3></li>
           {/* <li>{forum.user}</li> */}
-          <li>{forum.date}</li>
+          <li><h3>{forum.date}</h3></li>
           {/* <li>{this.handleThreadDisplay}</li> */}
           
 
           <li>
-            <Button type="primary"
+            <button
               onClick={() => {
                 this.updateMyForum(forum);
                 this.updateOn();
               }}
             >
               Edit
-            </Button>
+            </button>
           </li>
           <li>
-            <Button type="primary"
+            <button
               onClick={() => {
                 this.handleFormDelete(forum);
               }}
             >
               Delete
-            </Button>
+            </button>
           </li>
           <li>
-            <Button type="primary"
+            <button
               onClick={() => {this.setState({activeForum: forum}); console.log(forum)}}
             >
               Create a response!!
               <ThreadShowAll forumId={forum.id} token={this.props.token} activeForum={this.state.activeForum} />
-            </Button>
+            </button>
           </li>
           </div>
         </ul>
